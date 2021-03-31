@@ -31,7 +31,7 @@ namespace SqlHelpers
     public class Parameter
     {
         public string Name { get; set; }
-        public string Values { get; set; }
+        public object Values { get; set; }
     }
 
     public class SqlHelpers
@@ -43,21 +43,15 @@ namespace SqlHelpers
         {
             SqlConnection sqlConnection = new SqlConnection(connectionString);
 
-            SqlParameter[] _paramters = null;
             SqlCommand command = new SqlCommand();
 
             // Add parameter
             if (parameters != null)
             {
-                _paramters = new SqlParameter[parameters.Count];
-                int index = 0;
                 foreach (var par in parameters.GetParameters)
                 {
-                    _paramters[index] = new SqlParameter(par.Name, par.Values);
-                    index++;
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
                 }
-
-                command.Parameters.Add(_paramters);
             }
 
             command.Connection = sqlConnection;
@@ -72,21 +66,15 @@ namespace SqlHelpers
 
         public static void ExecuteNonQuery(SqlConnection sqlConnection, CommandType commandType, string commandText, Parameters parameters = null)
         {
-            SqlParameter[] _paramters = null;
             SqlCommand command = new SqlCommand();
 
             // Add parameter
             if (parameters != null)
             {
-                _paramters = new SqlParameter[parameters.Count];
-                int index = 0;
                 foreach (var par in parameters.GetParameters)
                 {
-                    _paramters[index] = new SqlParameter(par.Name, par.Values);
-                    index++;
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
                 }
-
-                command.Parameters.Add(_paramters);
             }
 
             if (sqlConnection.State == ConnectionState.Closed)
@@ -102,21 +90,15 @@ namespace SqlHelpers
 
         public static void ExecuteNonQuery(SqlTransaction sqlTransaction, CommandType commandType, string commandText, Parameters parameters = null)
         {
-            SqlParameter[] _paramters = null;
             SqlCommand command = new SqlCommand();
 
             // Add parameter
             if (parameters != null)
             {
-                _paramters = new SqlParameter[parameters.Count];
-                int index = 0;
                 foreach (var par in parameters.GetParameters)
                 {
-                    _paramters[index] = new SqlParameter(par.Name, par.Values);
-                    index++;
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
                 }
-
-                command.Parameters.Add(_paramters);
             }
 
             command.Transaction = sqlTransaction;
@@ -131,22 +113,16 @@ namespace SqlHelpers
         {
             DataSet dataSet = new DataSet();
             SqlConnection sqlConnection = new SqlConnection(connectionString);
-
-            SqlParameter[] _paramters = null;
+            
             SqlCommand command = new SqlCommand();
 
             // Add parameter
             if (parameters != null)
-            {
-                _paramters = new SqlParameter[parameters.Count];
-                int index = 0;
+            {              
                 foreach (var par in parameters.GetParameters)
-                {
-                    _paramters[index] = new SqlParameter(par.Name, par.Values);
-                    index++;
+                {                   
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
                 }
-
-                command.Parameters.Add(_paramters);
             }
 
             command.Connection = sqlConnection;
@@ -162,21 +138,15 @@ namespace SqlHelpers
 
         public static DataSet ExecuteDataset(SqlConnection sqlConnection, CommandType commandType, string commandText, Parameters parameters = null)
         {
-            SqlParameter[] _paramters = null;
             SqlCommand command = new SqlCommand();
 
             // Add parameter
             if (parameters != null)
             {
-                _paramters = new SqlParameter[parameters.Count];
-                int index = 0;
                 foreach (var par in parameters.GetParameters)
                 {
-                    _paramters[index] = new SqlParameter(par.Name, par.Values);
-                    index++;
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
                 }
-
-                command.Parameters.Add(_paramters);
             }
 
             DataSet dataSet = new DataSet();
@@ -194,21 +164,15 @@ namespace SqlHelpers
 
         public static DataSet ExecuteDataset(SqlTransaction sqlTransaction, CommandType commandType, string commandText, Parameters parameters = null)
         {
-            SqlParameter[] _paramters = null;
             SqlCommand command = new SqlCommand();
 
             // Add parameter
             if (parameters != null)
             {
-                _paramters = new SqlParameter[parameters.Count];
-                int index = 0;
                 foreach (var par in parameters.GetParameters)
                 {
-                    _paramters[index] = new SqlParameter(par.Name, par.Values);
-                    index++;
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
                 }
-
-                command.Parameters.Add(_paramters);
             }
 
             DataSet dataSet = new DataSet();
@@ -235,21 +199,15 @@ namespace SqlHelpers
 
         public static IEnumerable<T> ExecuteObject<T>(SqlTransaction sqlTransaction, CommandType commandType, string commandText, Parameters parameters = null)
         {
-            SqlParameter[] _paramters = null;
             SqlCommand command = new SqlCommand();
 
             // Add parameter
             if (parameters != null)
             {
-                _paramters = new SqlParameter[parameters.Count];
-                int index = 0;
                 foreach (var par in parameters.GetParameters)
                 {
-                    _paramters[index] = new SqlParameter(par.Name, par.Values);
-                    index++;
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
                 }
-
-                command.Parameters.Add(_paramters);
             }
 
             IList<T> items = new List<T>();
@@ -272,21 +230,15 @@ namespace SqlHelpers
 
         public static IEnumerable<T> ExecuteObject<T>(SqlConnection connection, CommandType commandType, string commandText, Parameters parameters = null)
         {
-            SqlParameter[] _paramters = null;
             SqlCommand command = new SqlCommand();
 
             // Add parameter
             if (parameters != null)
             {
-                _paramters = new SqlParameter[parameters.Count];
-                int index = 0;
                 foreach (var par in parameters.GetParameters)
                 {
-                    _paramters[index] = new SqlParameter(par.Name, par.Values);
-                    index++;
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
                 }
-
-                command.Parameters.Add(_paramters);
             }
 
             IList<T> items = new List<T>();
@@ -314,21 +266,15 @@ namespace SqlHelpers
 
         public static IEnumerable<T> ExecuteObject<T>(string connectionString, CommandType commandType, string commandText, Parameters parameters = null)
         {
-            SqlParameter[] _paramters = null;
             SqlCommand command = new SqlCommand();
 
             // Add parameter
             if (parameters != null)
             {
-                _paramters = new SqlParameter[parameters.Count];
-                int index = 0;
                 foreach (var par in parameters.GetParameters)
                 {
-                    _paramters[index] = new SqlParameter(par.Name, par.Values);
-                    index++;
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
                 }
-
-                command.Parameters.Add(_paramters);
             }
 
             IList<T> items = new List<T>();
