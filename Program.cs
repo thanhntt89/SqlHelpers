@@ -27,14 +27,15 @@ namespace SqlHelpers
             Parameters parameter = new Parameters();
             parameter.Add(new Parameter()
             {
-                Name = "@プロジェクトID",
-                Values =";delete * from [Wii].[dbo].[Fes機能ID] --"
-            });
-            parameter.Add(new Parameter()
-            {
                 Name = "@機能ID",
                 Values = 110
             });
+            parameter.Add(new Parameter()
+            {
+                Name = "@プロジェクトID",
+                Values =1
+            });
+            
 
             var dt = SqlHelpers.ExecuteDataset(connectionString, System.Data.CommandType.Text, sqlString, parameter);
         }

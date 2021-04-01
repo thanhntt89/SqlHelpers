@@ -1,7 +1,8 @@
-﻿//SqlHelper
-//Created by: Nguyen Tat Thanh
-//Created date: 31/03/2021
-//Email: thanhntt89bk@gmail.com
+﻿/*SqlHelper
+*Created by: Nguyen Tat Thanh
+*Created date: 31/03/2021
+*Email: thanhntt89bk@gmail.com
+*/
 using System;
 using System.Collections.Generic;
 using System.Data;
