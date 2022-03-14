@@ -1,4 +1,4 @@
-﻿/*SqlHelper
+/*SqlHelper
 *Created by: Nguyen Tat Thanh
 *Created date: 31/03/2021
 *Email: thanhntt89bk@gmail.com
@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
 
-namespace SqlHelpers
+namespace ImportSong.Business
 {
     public class Parameters
     {
@@ -37,8 +37,69 @@ namespace SqlHelpers
 
     public class SqlHelpers
     {
+        /// <summary>
+        /// Do not create new instanance  
+        /// </summary>
+        private SqlHelpers()
+        {
+
+        }
+
+        /// <summary>
+        /// Create connection string 
+        /// </summary>
+        /// <param name="serverName"></param>
+        /// <param name="userName"></param>
+        /// <param name="passwords"></param>
+        /// <param name="databaseName"></param>
+        /// <param name="timeOutTesting"></param>
+        /// <param name="commandTimeOut"></param>
+        public static void CreateConnectionString(string serverName, string userName, string passwords, string databaseName,int timeOutTesting, int commandTimeOut)
+        {
+            ConnectionString = string.Format("Data Source={0};Initial Catalog={1};Persist Security Info=True;User ID={2};Password={3};Connect Timeout={4};", serverName, databaseName, userName, passwords, commandTimeOut);
+
+            ConnectionStringTesting = string.Format("Data Source={0};Initial Catalog={1};Persist Security Info=True;User ID={2};Password={3};Connect Timeout={4};", serverName, databaseName, userName, passwords, timeOutTesting);
+
+            CommandTimeOut = commandTimeOut;
+        }      
+
+        /// <summary>
+        /// Check Sql Connection String
+        /// </summary>        
+        /// <returns>True when connected | False when fail connect</returns>
+        public static bool CheckConnectionString()
+        {            
+            try
+            {
+                if (string.IsNullOrWhiteSpace(ConnectionStringTesting)) 
+                    return false;
+
+                SqlConnection sqlConnection = new SqlConnection(ConnectionStringTesting);
+                sqlConnection.Open();
+                sqlConnection.Close();
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        private static string ConnectionStringTesting { get; set; }
+
+        public static string ConnectionString { get; set; }
+
+        private static SqlConnection _sqConnection { get; set; }
+
+        private static SqlTransaction _sqlTransaction { get; set; }
+
+        public static void CreateSqlConnection(string sqlConnectionString)
+        {
+            _sqConnection = new SqlConnection(sqlConnectionString);           
+        }
+
         public static int CommandTimeOut { get; set; }
-        private static int DefaultTimeOut = 30;
+        private const int DefaultTimeOut = 30;
 
         public static void ExecuteNonQuery(string connectionString, CommandType commandType, string commandText, Parameters parameters = null)
         {
@@ -114,14 +175,14 @@ namespace SqlHelpers
         {
             DataSet dataSet = new DataSet();
             SqlConnection sqlConnection = new SqlConnection(connectionString);
-            
+
             SqlCommand command = new SqlCommand();
 
             // Add parameter
             if (parameters != null)
-            {              
+            {
                 foreach (var par in parameters.GetParameters)
-                {                   
+                {
                     command.Parameters.Add(new SqlParameter(par.Name, par.Values));
                 }
             }
@@ -310,8 +371,7 @@ namespace SqlHelpers
         /// <summary>
         /// Execute bulk insert into table
         /// </summary>
-        /// <param name="dataTable"></param>
-        /// <param name="tableName"></param>
+        /// <param name="dataTable">Datatable with table name has exist in destination database</param>
         public static void ExecuteBulkInsert(string connectionString, DataTable dataTable)
         {
             try
@@ -346,6 +406,10 @@ namespace SqlHelpers
             }
         }
 
+        /// <summary>
+        /// Execute bulk insert into table
+        /// </summary>
+        /// <param name="dataTable">Datatable with table name has exist in destination database</param>
         public static void ExecuteBulkInsert(SqlConnection sqlConnection, DataTable dataTable)
         {
             try
@@ -380,6 +444,10 @@ namespace SqlHelpers
             }
         }
 
+        /// <summary>
+        /// Execute bulk insert into table
+        /// </summary>
+        /// <param name="dataTable">Datatable with table name has exist in destination database</param>
         public static void ExecuteBulkInsert(SqlTransaction sqlTransaction, DataTable dataTable)
         {
             try
@@ -406,5 +474,34 @@ namespace SqlHelpers
             }
         }
 
+        public static void TransactionCreate(string sqlConnecionString)
+        {
+            CreateSqlConnection(sqlConnecionString);
+            if (_sqConnection.State == ConnectionState.Closed)
+                _sqConnection.Open();
+
+            _sqlTransaction = _sqConnection.BeginTransaction();
+        }
+
+        public static void TransactionAdd(string query)
+        {
+            SqlHelpers.ExecuteNonQuery(_sqlTransaction, CommandType.Text, query);
+        }
+
+        public static void TransactionCommit()
+        {
+            if (_sqlTransaction != null)
+                _sqlTransaction.Commit();
+            if (_sqConnection != null && _sqConnection.State == ConnectionState.Open)
+                _sqConnection.Close();
+        }
+
+        public static void TransactionRollback()
+        {
+            if (_sqlTransaction != null)
+                _sqlTransaction.Rollback();
+            if (_sqConnection != null && _sqConnection.State == ConnectionState.Open)
+                _sqConnection.Close();
+        }
     }
 }
