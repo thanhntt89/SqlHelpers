@@ -485,7 +485,7 @@ namespace ImportSong.Business
 
         public static void TransactionAdd(string query)
         {
-            SqlHelpers.ExecuteNonQuery(_sqlTransaction, CommandType.Text, query);
+            ExecuteNonQuery(_sqlTransaction, CommandType.Text, query);
         }
 
         public static void TransactionCommit()
