@@ -57,14 +57,9 @@ namespace SqlHelpers
         }
 
         /// <summary>
-        /// Create connection string 
+        /// Create connection string
         /// </summary>
-        /// <param name="serverName"></param>
-        /// <param name="userName"></param>
-        /// <param name="passwords"></param>
-        /// <param name="databaseName"></param>
-        /// <param name="timeOutTesting"></param>
-        /// <param name="commandTimeOut"></param>
+        /// <param name="connectionInfo">Connection infomation</param>
         public static void CreateConnectionString(ConnectionInfo connectionInfo)
         {
             ConnectionString = string.Format("Data Source={0};Initial Catalog={1};Persist Security Info=True;User ID={2};Password={3};Connect Timeout={4};", connectionInfo.ServerName, connectionInfo.DatabaseName, connectionInfo.UserName, connectionInfo.Password, connectionInfo.TimeOutConnection);
