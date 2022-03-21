@@ -33,7 +33,7 @@ namespace SqlHelpers
     public class Parameter
     {
         public string Name { get; set; }
-        public object Values { get; set; }
+        public object Value { get; set; }
     }
 
     public class ConnectionInfo
@@ -118,7 +118,7 @@ namespace SqlHelpers
             {
                 foreach (var par in parameters.GetParameters)
                 {
-                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Value));
                 }
             }
 
@@ -141,7 +141,7 @@ namespace SqlHelpers
             {
                 foreach (var par in parameters.GetParameters)
                 {
-                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Value));
                 }
             }
 
@@ -165,7 +165,7 @@ namespace SqlHelpers
             {
                 foreach (var par in parameters.GetParameters)
                 {
-                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Value));
                 }
             }
 
@@ -189,7 +189,7 @@ namespace SqlHelpers
             {
                 foreach (var par in parameters.GetParameters)
                 {
-                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Value));
                 }
             }
 
@@ -213,7 +213,7 @@ namespace SqlHelpers
             {
                 foreach (var par in parameters.GetParameters)
                 {
-                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Value));
                 }
             }
 
@@ -239,7 +239,7 @@ namespace SqlHelpers
             {
                 foreach (var par in parameters.GetParameters)
                 {
-                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Value));
                 }
             }
 
@@ -274,7 +274,7 @@ namespace SqlHelpers
             {
                 foreach (var par in parameters.GetParameters)
                 {
-                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Value));
                 }
             }
 
@@ -305,7 +305,7 @@ namespace SqlHelpers
             {
                 foreach (var par in parameters.GetParameters)
                 {
-                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Value));
                 }
             }
 
@@ -341,7 +341,7 @@ namespace SqlHelpers
             {
                 foreach (var par in parameters.GetParameters)
                 {
-                    command.Parameters.Add(new SqlParameter(par.Name, par.Values));
+                    command.Parameters.Add(new SqlParameter(par.Name, par.Value));
                 }
             }
 
